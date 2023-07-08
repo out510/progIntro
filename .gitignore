@@ -1,7 +1,10 @@
+*
+!/**/
 !*.*
 *.lps
 *.compiled
-*. [oa]
+*.o
+*.a
 *.ppu
 *.rst
 *.cgi
