@@ -1,4 +1,4 @@
-program AddToAnyPlaceOfLinkedList;
+program addToList;
 type
 	pp = ^nodePtr;
 	nodePtr = ^node;
@@ -6,6 +6,8 @@ type
 		num: integer;
 		next: nodePtr;
 	end;
+var
+	p1, p2, p3: pp;
 
 procedure printLinkedList(var head: nodePtr);
 var 
@@ -23,42 +25,30 @@ begin
 	writeln;
 end;
 
-procedure add(var head: nodePtr; n, position: integer);
+procedure add(var cur: nodePtr; n: integer);
 var
-	i: integer;
-	cur: pp;
 	tmp: nodePtr;
 begin
-	i := 1;
-	cur := @head;
-	while i <> position do
+	if p1 = nil then
+		p1 := @(cur^.next)
+	else
 	begin
-		cur := @(cur^^.next);
-		i := i + 1;
+		if p2 = nil then
+			p2 := @(cur^.next)
+		else
+			p3 := @(cur^.next);
 	end;
-	new(tmp);
-	tmp^.num := n;
-	tmp^.next := cur^;
-	cur^ := tmp;
-end;
-
-procedure add2(var head: nodePtr; n, position: integer);
-var
-	i: integer;
-	cur: nodePtr;
-	tmp: nodePtr;
-begin
-	i := 1;
-	cur := head;
-	while i <> position do
+	if (cur = nil) or (cur^.num > n) then
 	begin
-		cur := cur^.next;
-		i := i + 1;
-	end;
-	new(tmp);
-	tmp^.num := n;
-	tmp^.next := cur;
-	cur := tmp;
+		writeln('p2^^.num = ', p2^^.num); { 4 for 1 -> 2 -> 4}
+		writeln('p2 = @cur ', p2 = @cur);
+		new(tmp);
+		tmp^.num := n;
+		tmp^.next := cur;
+		cur := tmp;
+	end
+	else
+		add(cur^.next, n);
 end;
 
 var
@@ -80,9 +70,10 @@ begin
 	end;
 	printLinkedList(head);
 	readln(n);
-	readln(i);
-	add2(head, n, i);
-	printLinkedList(head);
-	add(head, n, i);
+	p1 := nil;
+	p2 := nil;
+	p3 := nil;
+	add(head, n);
 	printLinkedList(head);
 end.
+
